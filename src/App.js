@@ -18,6 +18,7 @@ function App() {
         <Route index element = {<MainPage/>}/>
         <Route path="post-write" element={<PostWritePage/>}/>
         <Route path="post/:postId" element={<PostViewPage />} />
+        <Route path="post-write/:postId" element={<PostWritePage />} />
       </Routes>
     </BrowserRouter>
   );

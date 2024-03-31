@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import TextInput from '../ui/TextInput';
 import Button from '../ui/Button';
 import Header from '../ui/Header';
-import data from '../../data.json'
 
 const Wrapper = styled.div`
     padding: 16px;
@@ -36,15 +35,42 @@ const ButtonContainer = styled.div`
 
 function PostWritePage(props) {
     const navigate = useNavigate();
+    // useLocation을 사용하여 location 객체에 접근
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const postId = queryParams.get('postId');
-    const isEdit = queryParams.get('edit') === 'true';
-    const post = isEdit ? data.find((item) => item.id == postId) : null;
 
-    const [title, setTitle] = useState(post ? post.title : '');
-    const [author, setAuthor] = useState(post ? post.author : '');
-    const [content, setContent] = useState(post ? post.content : '');
+    // 상태 정의 부분...
+    const [title, setTitle] = useState('');
+    const [author, setAuthor] = useState('');
+    const [content, setContent] = useState('');
+    // `isEdit`와 `postId` 상태 추가
+    const [isEdit, setIsEdit] = useState(false);
+    const [postId, setPostId] = useState(null);
+
+    useEffect(() => {
+        // 이 부분에서 queryParams를 정의합니다.
+        const queryParams = new URLSearchParams(location.search);
+        const postIdFromQuery = queryParams.get('postId');
+        const isEditFromQuery = queryParams.get('edit') === 'true';
+    
+        // 상태 업데이트
+        setPostId(postIdFromQuery);
+        setIsEdit(isEditFromQuery);
+    
+        // 수정 모드이고 postId가 있을 경우에만 서버로부터 데이터를 가져옵니다.
+        if (isEditFromQuery && postIdFromQuery) {
+            fetch(`http://localhost:3001/rest-api/posts/${postIdFromQuery}`)
+                .then(response => response.json())
+                .then(data => {
+                    setTitle(data.title);
+                    setAuthor(data.author);
+                    setContent(data.content);
+                })
+                .catch(error => {
+                    console.error('Error fetching post data:', error);
+                    alert('게시글을 불러오는 데 실패했습니다.');
+                });
+        }
+    }, [location]); // location이 변경될 때마다 useEffect가 실행됩니다.
 
     // 버튼 클릭 시 실행되는 함수
     const handleSubmit = async () => {
@@ -53,28 +79,28 @@ function PostWritePage(props) {
             return;
         }
 
+        const postInfo = { title, author, content };
+        const url = `http://localhost:3001/rest-api/posts${isEdit ? `/${postId}` : ''}`;
+        console.log(url);
+        const method = isEdit ? 'PUT' : 'POST';
+
         try {
-            // 서버에 POST 요청을 보냅니다.
-            const response = await fetch('http://localhost:3001/rest-api/posts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title, author, content }),
+            const response = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(postInfo),
             });
 
             if (response.ok) {
-                // 요청이 성공적이면 홈으로 리디렉션합니다.
                 navigate('/');
             } else {
-                // 서버 오류를 처리합니다.
-                throw new Error('Failed to create post.');
+                throw new Error('Failed to save the post.');
             }
         } catch (error) {
-            // 에러 처리
             console.error('Failed to submit post:', error);
             alert('글을 저장하는 데 실패했습니다.');
         }
+        console.log(postId, isEdit);
     };
 
     return (

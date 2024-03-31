@@ -27,17 +27,17 @@ function MainPage(props) {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
 
-    // 컴포넌트가 마운트될 때 서버로부터 게시글 목록을 가져옵니다.
+    // 게시물 목록 가져오기
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                // 서버 엔드포인트 주소를 업데이트합니다.
+                // 서버의 엔드포인트 주소 업데이트
                 const response = await fetch('http://localhost:3001/rest-api/posts');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setPosts(data); // 상태를 업데이트합니다.
+                setPosts(data); // 상태 업데이트
             } catch (error) {
                 console.error('Failed to fetch posts:', error);
             }
