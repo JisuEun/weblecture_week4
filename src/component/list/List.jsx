@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 20px; /* 모서리를 둥글게 */
+  border: 1px solid black; /* 검은색 테두리 */
+  padding: 20px; /* 내부 여백 추가 */
+  background: white; /* 배경색 설정 */
+  margin: 20px; /* 외부 여백 추가 */
 `;
 
 const ButtonsContainer = styled.div`

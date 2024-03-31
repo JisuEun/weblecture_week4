@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import TextInput from '../ui/TextInput';
 import Button from '../ui/Button';
 import Header from '../ui/Header';
+import data from '../../data.json'
 
 const Wrapper = styled.div`
     padding: 16px;
@@ -35,10 +36,27 @@ const ButtonContainer = styled.div`
 
 function PostWritePage(props) {
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const postId = queryParams.get('postId');
+    const isEdit = queryParams.get('edit') === 'true';
+    const post = isEdit ? data.find((item) => item.id == postId) : null;
 
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [content, setContent] = useState('');
+    const [title, setTitle] = useState(post ? post.title : '');
+    const [author, setAuthor] = useState(post ? post.author : '');
+    const [content, setContent] = useState(post ? post.content : '');
+
+    // 버튼 클릭 시 실행되는 함수
+    const handleSubmit = () => {
+        // 모든 입력 필드가 채워져 있는지 검사
+        if (!title.trim() || !author.trim() || !content.trim()) {
+            // 하나라도 비어있다면 경고 메시지를 표시
+            alert('모든 필드를 채워주세요!');
+        } else {
+            // 모두 채워져 있다면, 홈으로 리디렉션
+            navigate('/');
+        }
+    };
 
     return (
         <Wrapper>
@@ -85,9 +103,7 @@ function PostWritePage(props) {
                 <ButtonContainer>
                     <Button
                         title='글 작성하기'
-                        onClick={() => {
-                            navigate('/');
-                        }}
+                        onClick={handleSubmit} // onClick 핸들러를 handleSubmit 함수로 변경
                     />
                 </ButtonContainer>
             </Container>

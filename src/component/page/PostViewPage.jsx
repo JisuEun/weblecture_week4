@@ -90,6 +90,13 @@ function PostViewPage(props) {
         return item.id == postId;
     });
 
+    const handleDelete = () => {
+        const isConfirmed = window.confirm('정말로 글을 삭제하시겠습니까?');
+        if (isConfirmed) {
+            navigate('/');
+        }
+    };
+
     return (
         <Wrapper>
             <Container>
@@ -113,17 +120,15 @@ function PostViewPage(props) {
                     />
                 </LeftButtonGroup>
                 <RightButtonGroup>
-                    <Button
-                        title='수정'
-                        onClick={() => {
-                            navigate('/');
-                        }}
-                    />
+                <Button
+                    title='수정'
+                    onClick={() => {
+                        navigate(`/post-write?postId=${postId}&edit=true`);
+                    }}
+                />
                     <Button
                         title='삭제'
-                        onClick={() => {
-                            navigate('/');
-                        }}
+                        onClick={handleDelete}
                     />
                 </RightButtonGroup>
             </ButtonGroup>
