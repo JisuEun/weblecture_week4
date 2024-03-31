@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../ui/Button';
-import data from '../../data.json';
 import Header from '../ui/Header';
 
 const Wrapper = styled.div`
@@ -86,16 +85,47 @@ function PostViewPage(props) {
 
     const navigate = useNavigate();
     const { postId } = useParams();
-    const post = data.find((item) => {
-        return item.id == postId;
-    });
+    const [post, setPost] = useState(null);
 
-    const handleDelete = () => {
+    // 서버로부터 게시물 데이터를 가져오는 함수
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`http://localhost:3001/rest-api/posts/${postId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setPost(data);
+            } catch (error) {
+                console.error('Failed to fetch post:', error);
+                navigate('/'); // 에러가 발생하면 메인 페이지로 리다이렉트합니다.
+            }
+        };
+
+        fetchPost();
+    }, [postId, navigate]); // postId가 변경되면 다시 실행됩니다.
+
+    // handleDelete
+    const handleDelete = async () => {
         const isConfirmed = window.confirm('정말로 글을 삭제하시겠습니까?');
         if (isConfirmed) {
-            navigate('/');
+            try {
+                const response = await fetch(`http://localhost:3001/rest-api/posts/${postId}`, {
+                    method: 'DELETE',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to delete the post.');
+                }
+                navigate('/'); // 삭제 후 메인 페이지로 리다이렉트합니다.
+            } catch (error) {
+                console.error('Failed to delete post:', error);
+                alert('글을 삭제하는 데 실패했습니다.');
+            }
         }
     };
+
+    if (!post) return <div>Loading...</div>;
 
     return (
         <Wrapper>
