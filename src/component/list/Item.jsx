@@ -12,26 +12,33 @@ const Wrapper = styled.div`
     border-radius: 8px;
     cursor: pointer;
     background: white;
-    :hover {
-        background: lightgrey;
-    }
 `;
 
-const Info = styled.span` // span으로 변경하여 inline 요소로 만듭니다.
-    font-size: 14px;
-    color: #666;
-    margin-right: 12px; // 마진으로 요소 사이 간격 조정
+const Info = styled.span`
+  display: flex; // Flex 컨테이너로 만듭니다.
+  flex-direction: column; // 아이템들을 세로로 배열합니다.
+  justify-content: center; // 세로 축에서 아이템들을 중앙에 배치합니다.
+  flex: 1; // Flex 아이템들이 컨테이너 공간을 동등하게 나누도록 설정
+  font-size: 14px;
+  color: #666;
+  margin-right: 12px;
+  text-align: left;
+  
+  &:last-child {
+    margin-right: 0;
+    text-align: right;
+  }
 `;
 
 function Item(props) {
-    const { post, onClick } = props;
+    const { index, post, onClick } = props;
 
     return (
         <Wrapper onClick={onClick}>
-            <Info>{post.id}</Info>
-            <Info>{post.title}</Info>
-            <Info>{post.author}</Info>
-            <Info>{post.time}</Info>
+            <Info>{index + 1}</Info>
+            <Info>제목: {post.title}</Info>
+            <Info>|작가: {post.author}</Info>
+            <Info>|작성시간: {post.time}</Info>
         </Wrapper>
     );
 }

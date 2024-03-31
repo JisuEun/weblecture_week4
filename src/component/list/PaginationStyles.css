@@ -1,0 +1,56 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    background-color: white; /* 배경색 흰색으로 설정 */
+    color: black; /* 텍스트 색상 검은색으로 설정 */
+}
+
+ul.pagination li:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+ul.pagination li:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+ul.pagination li a {
+    text-decoration: none;
+    color: black; /* 텍스트 색상 검은색으로 설정 */
+    font-size: 1rem;
+}
+
+ul.pagination li.active a {
+    color: white; /* 활성 페이지 텍스트 색상 흰색으로 설정 */
+}
+
+ul.pagination li.active {
+    background-color: black; /* 활성 페이지 배경색 검은색으로 설정 */
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+    color: blue; /* 호버 시 색상 설정, 필요하다면 이 부분도 변경 가능 */
+}
+
+.page-selection {
+    width: 48px;
+    height: 30px;
+    color: black; /* 선택 페이지 텍스트 색상 검은색으로 설정 */
+}
