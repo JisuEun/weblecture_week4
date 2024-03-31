@@ -20,14 +20,12 @@ const Container = styled.div`
     }
 `;
 
-// 입력 필드를 담는 컨테이너 스타일을 추가합니다.
 const InputContainer = styled.div`
     :not(:last-child) {
         margin-bottom: 16px;
     }
 `;
 
-// 버튼을 오른쪽 하단에 위치시키기 위한 스타일을 추가합니다.
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: flex-end;
@@ -38,16 +36,16 @@ function PostWritePage(props) {
     // useLocation을 사용하여 location 객체에 접근
     const location = useLocation();
 
-    // 상태 정의 부분...
+    // 상태 정의
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [content, setContent] = useState('');
-    // `isEdit`와 `postId` 상태 추가
+    // `isEdit`와 `postId` 상태
     const [isEdit, setIsEdit] = useState(false);
     const [postId, setPostId] = useState(null);
 
     useEffect(() => {
-        // 이 부분에서 queryParams를 정의합니다.
+        // queryParams 정의
         const queryParams = new URLSearchParams(location.search);
         const postIdFromQuery = queryParams.get('postId');
         const isEditFromQuery = queryParams.get('edit') === 'true';
@@ -56,7 +54,7 @@ function PostWritePage(props) {
         setPostId(postIdFromQuery);
         setIsEdit(isEditFromQuery);
     
-        // 수정 모드이고 postId가 있을 경우에만 서버로부터 데이터를 가져옵니다.
+        // 수정 모드이고 postId가 있을 경우에만 서버로부터 데이터를 가져옴
         if (isEditFromQuery && postIdFromQuery) {
             fetch(`http://localhost:3001/rest-api/posts/${postIdFromQuery}`)
                 .then(response => response.json())
@@ -70,7 +68,7 @@ function PostWritePage(props) {
                     alert('게시글을 불러오는 데 실패했습니다.');
                 });
         }
-    }, [location]); // location이 변경될 때마다 useEffect가 실행됩니다.
+    }, [location]); // location이 변경될 때마다 useEffect가 실행됨
 
     // 버튼 클릭 시 실행되는 함수
     const handleSubmit = async () => {

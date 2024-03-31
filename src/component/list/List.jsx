@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import Pagination from 'react-js-pagination';
-import Button from '../ui/Button'; // Button 컴포넌트 임포트
+import Button from '../ui/Button';
 import './PaginationStyles.css';
 
 const Wrapper = styled.div`
@@ -10,22 +10,22 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 20px; /* 모서리를 둥글게 */
-  border: 1px solid black; /* 검은색 테두리 */
+  border-radius: 20px; /* 모서리 둥글게 */
+  border: 1px solid black;
   padding: 20px; /* 내부 여백 추가 */
   background: white; /* 배경색 설정 */
-  margin: 20px; /* 외부 여백 추가 */
+  margin: 0px; /* 외부 여백 추가 */
 `;
 
 const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: flex-end; // 버튼들을 우측에 정렬합니다.
-  gap: 10px; // 버튼들 사이의 간격
+  justify-content: flex-end; // 페이지네이션 개수 버튼 우측 정렬
+  gap: 10px; // 버튼 간 간격
 `;
 
 const ItemsPerPageLabel = styled.span`
   font-size: 18px;
-  margin-right: 20px; // 라벨과 버튼 사이의 간격을 조정합니다.
+  margin-right: 20px;
 `;
 
 const ItemsPerPageSelector = styled.div`
@@ -33,7 +33,7 @@ const ItemsPerPageSelector = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 20px;
-  gap: 10px; // 버튼 사이의 간격
+  gap: 10px;
 `;
 
 function List({ posts, onClickItem }) {

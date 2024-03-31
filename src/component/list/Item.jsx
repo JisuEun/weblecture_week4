@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../ui/Header";
 
 const Wrapper = styled.div`
-    // 기존 스타일을 유지하면서 display를 flex로 변경합니다.
     display: flex;
     align-items: center; // 세로 중앙 정렬
     width: calc(100% - 32px);
@@ -15,9 +13,9 @@ const Wrapper = styled.div`
 `;
 
 const Info = styled.span`
-  display: flex; // Flex 컨테이너로 만듭니다.
-  flex-direction: column; // 아이템들을 세로로 배열합니다.
-  justify-content: center; // 세로 축에서 아이템들을 중앙에 배치합니다.
+  display: flex;
+  flex-direction: column; // 아이템들을 세로로 배열
+  justify-content: center; // 세로 축에서 아이템들을 중앙에 배치
   flex: 1; // Flex 아이템들이 컨테이너 공간을 동등하게 나누도록 설정
   font-size: 14px;
   color: #666;

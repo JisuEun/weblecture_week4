@@ -61,7 +61,7 @@ const DateTime = styled.p`
 const Divider = styled.hr`
     border: none;
     height: 1px;
-    background-color: grey; /* 구분선 색상 */
+    background-color: grey; /* 구분선 색: 회색 */
     margin: 16px 0; /* 구분선 위아래 여백 */
 `;
 
@@ -72,7 +72,6 @@ const ButtonGroup = styled.div`
 `;
 
 const LeftButtonGroup = styled.div`
-    // 필요한 경우 스타일을 추가할 수 있습니다.
 `;
 
 const RightButtonGroup = styled.div`
@@ -99,12 +98,12 @@ function PostViewPage(props) {
                 setPost(data);
             } catch (error) {
                 console.error('Failed to fetch post:', error);
-                navigate('/'); // 에러가 발생하면 메인 페이지로 리다이렉트합니다.
+                navigate('/'); // 에러가 발생하면 메인 페이지로 리다이렉트
             }
         };
 
         fetchPost();
-    }, [postId, navigate]); // postId가 변경되면 다시 실행됩니다.
+    }, [postId, navigate]); // postId가 변경될 때마다 다시 실행
 
     // handleDelete
     const handleDelete = async () => {
@@ -117,7 +116,7 @@ function PostViewPage(props) {
                 if (!response.ok) {
                     throw new Error('Failed to delete the post.');
                 }
-                navigate('/'); // 삭제 후 메인 페이지로 리다이렉트합니다.
+                navigate('/'); // 삭제 후 메인 페이지로 리다이렉트
             } catch (error) {
                 console.error('Failed to delete post:', error);
                 alert('글을 삭제하는 데 실패했습니다.');
