@@ -32,7 +32,7 @@ function MainPage(props) {
         const fetchPosts = async () => {
             try {
                 // 서버의 엔드포인트 주소 업데이트
-                const response = await fetch('http://localhost:3001/rest-api/posts');
+                const response = await fetch('http://54.161.32.32/rest-api/posts');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

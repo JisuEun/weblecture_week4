@@ -56,7 +56,7 @@ function PostWritePage(props) {
     
         // 수정 모드이고 postId가 있을 경우에만 서버로부터 데이터를 가져옴
         if (isEditFromQuery && postIdFromQuery) {
-            fetch(`http://localhost:3001/rest-api/posts/${postIdFromQuery}`)
+            fetch(`http://54.161.32.32/rest-api/posts/${postIdFromQuery}`)
                 .then(response => response.json())
                 .then(data => {
                     setTitle(data.title);
@@ -78,7 +78,7 @@ function PostWritePage(props) {
         }
 
         const postInfo = { title, author, content };
-        const url = `http://localhost:3001/rest-api/posts${isEdit ? `/${postId}` : ''}`;
+        const url = `http://54.161.32.32/rest-api/posts${isEdit ? `/${postId}` : ''}`;
         console.log(url);
         const method = isEdit ? 'PUT' : 'POST';
 

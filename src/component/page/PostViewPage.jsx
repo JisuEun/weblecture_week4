@@ -90,7 +90,7 @@ function PostViewPage(props) {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/rest-api/posts/${postId}`);
+                const response = await fetch(`http://54.161.32.32/rest-api/posts/${postId}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -110,7 +110,7 @@ function PostViewPage(props) {
         const isConfirmed = window.confirm('정말로 글을 삭제하시겠습니까?');
         if (isConfirmed) {
             try {
-                const response = await fetch(`http://localhost:3001/rest-api/posts/${postId}`, {
+                const response = await fetch(`http://54.161.32.32/rest-api/posts/${postId}`, {
                     method: 'DELETE',
                 });
                 if (!response.ok) {
