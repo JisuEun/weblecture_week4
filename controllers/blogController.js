@@ -53,7 +53,7 @@ exports.updatePost = async (req, res) => {
     }
   };
 
-  // 글 삭제하기
+// 글 삭제하기
 exports.deletePost = async (req, res) => {
     try {
       const post = await Post.findByPk(req.params.id);
