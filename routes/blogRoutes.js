@@ -10,4 +10,6 @@ router.get('/posts', blogController.getPosts);
 router.post('/posts', blogController.createPost);
 // 예: router.post('/posts', blogController.createPost);
 
+router.get('/posts/:id', blogController.getPost); // 특정 게시글 가져오기
+
 module.exports = router;
