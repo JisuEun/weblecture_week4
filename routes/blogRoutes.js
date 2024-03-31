@@ -12,4 +12,6 @@ router.post('/posts', blogController.createPost);
 
 router.get('/posts/:id', blogController.getPost); // 특정 게시글 가져오기
 
+router.delete('/posts/:id', blogController.deletePost); // 특정 게시글 삭제
+
 module.exports = router;

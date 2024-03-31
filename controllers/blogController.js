@@ -36,4 +36,18 @@ exports.getPost = async (req, res) => {
     }
 };
 
+exports.deletePost = async (req, res) => {
+    try {
+      const post = await Post.findByPk(req.params.id);
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+      await post.destroy();
+      res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'An error occurred while deleting the post' });
+    }
+  };
+
 // 예: exports.createPost, exports.getPost, exports.updatePost, exports.deletePost 등
