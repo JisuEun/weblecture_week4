@@ -38,7 +38,7 @@ function Item(props) {
             <Info>{index + 1}</Info>
             <Info>제목: {post.title}</Info>
             <Info>|작가: {post.author}</Info>
-            <Info>|작성시간: {post.time}</Info>
+            <Info>|작성시간: {post.createdAt}</Info>
         </Wrapper>
     );
 }

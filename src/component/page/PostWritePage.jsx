@@ -47,14 +47,33 @@ function PostWritePage(props) {
     const [content, setContent] = useState(post ? post.content : '');
 
     // 버튼 클릭 시 실행되는 함수
-    const handleSubmit = () => {
-        // 모든 입력 필드가 채워져 있는지 검사
+    const handleSubmit = async () => {
         if (!title.trim() || !author.trim() || !content.trim()) {
-            // 하나라도 비어있다면 경고 메시지를 표시
             alert('모든 필드를 채워주세요!');
-        } else {
-            // 모두 채워져 있다면, 홈으로 리디렉션
-            navigate('/');
+            return;
+        }
+
+        try {
+            // 서버에 POST 요청을 보냅니다.
+            const response = await fetch('http://localhost:3001/rest-api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title, author, content }),
+            });
+
+            if (response.ok) {
+                // 요청이 성공적이면 홈으로 리디렉션합니다.
+                navigate('/');
+            } else {
+                // 서버 오류를 처리합니다.
+                throw new Error('Failed to create post.');
+            }
+        } catch (error) {
+            // 에러 처리
+            console.error('Failed to submit post:', error);
+            alert('글을 저장하는 데 실패했습니다.');
         }
     };
 

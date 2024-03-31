@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../ui/Button';
-import data from '../../data.json';
 import List from '../list/List';
 import Header from '../ui/Header';
 
@@ -26,7 +25,26 @@ const Container = styled.div`
 
 function MainPage(props) {
     const navigate = useNavigate();
+    const [posts, setPosts] = useState([]);
 
+    // 컴포넌트가 마운트될 때 서버로부터 게시글 목록을 가져옵니다.
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                // 서버 엔드포인트 주소를 업데이트합니다.
+                const response = await fetch('http://localhost:3001/rest-api/posts');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setPosts(data); // 상태를 업데이트합니다.
+            } catch (error) {
+                console.error('Failed to fetch posts:', error);
+            }
+        };
+
+        fetchPosts();
+    }, []);
     return (
         <Wrapper>
             <Container>
@@ -39,7 +57,7 @@ function MainPage(props) {
                 />
 
                 <List
-                    posts={data}
+                    posts={posts}
                     onClickItem={(item) => {
                         navigate(`/post/${item.id}`);
                     }}
