@@ -1,6 +1,6 @@
 const { Post } = require('../models');
 
-// 모든 게시글 가져오기
+// 글 목록 가져오기
 exports.getPosts = async (req, res) => {
   try {
     const posts = await Post.findAll();
@@ -11,7 +11,7 @@ exports.getPosts = async (req, res) => {
   }
 };
 
-// 새 글 작성하기
+// 글 작성하기
 exports.createPost = async (req, res) => {
     try {
       const { title, author, content } = req.body;
@@ -23,6 +23,7 @@ exports.createPost = async (req, res) => {
     }
   };
 
+// 특정 글 가져오기
 exports.getPost = async (req, res) => {
     try {
         const post = await Post.findByPk(req.params.id);
@@ -36,6 +37,23 @@ exports.getPost = async (req, res) => {
     }
 };
 
+// 글 수정하기
+exports.updatePost = async (req, res) => {
+    try {
+      const post = await Post.findByPk(req.params.id);
+      if (post) {
+        await post.update(req.body);
+        res.json(post);
+      } else {
+        res.status(404).json({ error: 'Post not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'An error occurred while updating the post' });
+    }
+  };
+
+  // 글 삭제하기
 exports.deletePost = async (req, res) => {
     try {
       const post = await Post.findByPk(req.params.id);
@@ -49,5 +67,3 @@ exports.deletePost = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while deleting the post' });
     }
   };
-
-// 예: exports.createPost, exports.getPost, exports.updatePost, exports.deletePost 등
