@@ -134,7 +134,7 @@ function PostViewPage(props) {
                     <TitleText>{post.title}</TitleText>
                     <AuthorAndTimeContainer>
                         <Author>글쓴이: {post.author}</Author>
-                        <DateTime>{post.time}</DateTime>
+                        <DateTime>{post.createdAt}</DateTime>
                     </AuthorAndTimeContainer>
                     <Divider /> {/* 구분선 추가 */}
                     <ContentText>{post.content}</ContentText>
